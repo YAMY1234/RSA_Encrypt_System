@@ -167,7 +167,7 @@ After the initial permutation, the 64-bit data block is divided into two 32-bit 
 
 Each round starts with $Li-1 $and $Ri-1 $, and then performs an extended permutation as shown in the table, expanding $R_ {i-1} $from 32 bits to 48 bits. The main purpose of this permutation is to create some avalanche effect in the process of encrypting data. Using 1 bit in the data block will affect more bits in the next operation, resulting in a diffusion effect.
 
-Once the extended permutation is complete, calculate the exclusive OR of the 48-bit result value to this wheel key $K_i $ (**XOR **, in sign-wise). This produces a 48-bit intermediate value, denoted as $R_ {int} $.
+Once the extended permutation is complete, calculate the exclusive OR of the 48-bit result value to this wheel key $K_i $ (**XOR**, in sign-wise). This produces a 48-bit intermediate value, denoted as $R_ {int} $.
 
 If E is counted as the result of extended permutation, the operation so far in this round can be expressed as:
 
@@ -218,21 +218,21 @@ Data members mainly include initial permutation table, key initial permutation t
 ```C++
 class DES {
 private:
-/*** Data Initial Replacement Table ***/
+/*** Data Initial Replacement Table***/
     int T1[8][8];
-/*** Key Initial Replacement Table ***/
+/*** Key Initial Replacement Table***/
     int T2[8][7];
-/*** key cycle left shift digit table ***/
+/*** key cycle left shift digit table***/
     int T3[16];
-/*** key compression permutation table ***/
+/*** key compression permutation table***/
     int T4[8][6];
-/*** data extension table ***/
+/*** data extension table***/
     int T5[8][6];
-/*** S box replacement table ***/
+/*** S box replacement table***/
     int S[8][4][16];
-/*** P box replacement table ***/
+/*** P box replacement table***/
     int P[4][8];
-/*** Final replacement table ***/
+/*** Final replacement table***/
     int T6[8][8];
     string Keys[20];
 public:
@@ -305,7 +305,7 @@ Inputs: Random (secret) 64-bit seed $s $, integer $m $, two keys $k_1, k_2 $. DE
 
 Output: m 64-bit random bits $x_1, x_2,..., x_m $
 
-$I = DES_ {k1} (DES_k2 ^ {-1} (DES_ {k1} (D))) $, where $D $ represents an exact representation of the current date/time, and $ DES $represents **DES ** encryption. $DES ^ {-1} $represents **DES **decryption.
+$I = DES_ {k1} (DES_k2 ^ {-1} (DES_ {k1} (D))) $, where $D $ represents an exact representation of the current date/time, and $ DES $represents**DES** encryption. $DES ^ {-1} $represents**DES**decryption.
 
 2、`For i=1 to m`:
 $$
@@ -393,21 +393,21 @@ AES The encryption process operates on a 4 × 4 byte matrix, also known as "stat
 
 MixColumns - To fully blend the operations of the individual straight lines in the matrix. This step uses a linear transformation to mix four bytes per internal connection. The MixColumns step is omitted in the last encryption loop and replaced with another AddRoundKey.
 
-**S box transform (SubBytes) **
+**S box transform (SubBytes)**
 
 Each byte in the matrix is transformed by an 8-bit S-box. This step provides the transformation capability of cryptographic nonlinearity. The S-box is related to the multiplicative inverse element on GF (28) and is known to have good nonlinear properties. To avoid attacks of simple algebraic properties, the S-box is constructed by combining the multiplicative inverse element and an invertible affine transformation matrix. In addition, when constructing the S-box, fixed points and inverse fixed points are deliberately avoided, that is, replacing bytes with S-boxes will result in misalignment. For example, one byte is 0x19, and after the S-box transformation, we find n (1,9) = 0xd4, so we replace it with 0xd4.  
 
 ![img](./pic_sources/wps89.jpg) 
 
-**ShiftRows **
+**ShiftRows**
 
 ShiftRows describes row operations in a matrix. In this step, each row is cyclic shifted to the left by a certain offset. In AES (block size 128 bits), the first row remains the same, and each byte in the second row is cyclic moved one grid to the left. Similarly, the third and fourth rows are cyclic shifted to the left by 2 and 3, respectively. After ShiftRows, each vertical column in the matrix consists of elements from each different column in the input matrix.
 
-**Column Transform (MixColumns) **
+**Column Transform (MixColumns)**
 
 In the MixColumns step, the four bytes of each column are combined by a linear transformation. The four elements of each column are treated as coefficients, and the combination is a polynomial in GF (28). Then the polynomial is multiplied with a fixed polynomial under modulo. This step can also be regarded as matrix multiplication under Rijndael finite fields. The MixColumns Function accepts 4 bytes of input and outputs 4 bytes. Each input byte affects the output four bytes. Therefore, the two steps of ShiftRows and MixColumns provide diffusion for this cryptosystem.
 
-**Extended Key (AddRoundKey) **
+**Extended Key (AddRoundKey)**
 
 The AES Algorithm uses the external input key K (the number of words in the keystring is Nk) to obtain a total of 4 (Nr + 1) words of the extended key through the key extension program. It involves the following three modules:
 
